@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InfluencerRequest;
+use App\Http\Requests\InfluencerCampaingRequest;
 use App\Http\Resources\InfluencerResource;
 use App\Services\InfluencerService;
 
@@ -50,5 +51,14 @@ class InfluencerController extends Controller
         );
 
         return ApiResponse::created(new InfluencerResource($influencer));
+    }
+
+    public function campaignStore(InfluencerCampaingRequest $request)
+    {
+        $influencerCampaign = $this->influencerService->createInfluencerCampaign(
+            $request->validated(),
+        );
+
+        return ApiResponse::created(new InfluencerResource($influencerCampaign));
     }
 }

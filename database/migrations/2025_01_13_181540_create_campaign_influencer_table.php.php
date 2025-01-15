@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('campaign_influencer', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('campaign_id')->constrained()->onDelete('cascade');
             $table->foreignId('influencer_id')->constrained()->onDelete('cascade');
             
             $table->timestamps();
             $table->softDeletes();
 
-            $table->primary(['campaign_id', 'influencer_id']);
+            $table->unique(['campaign_id', 'influencer_id']);
         });
     }
 

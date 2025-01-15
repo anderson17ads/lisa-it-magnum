@@ -43,4 +43,27 @@ class InfluencerService
 
         return $influencer;
     }
+
+    /**
+     * Attaches campaigns to an existing influencer based on the provided data.
+     *
+     * @param array $data Data containing the influencer ID and campaigns to attach.
+     *  - 'id': int, The ID of the influencer.
+     *  - 'campaigns': array, List of campaign IDs to be associated with the influencer.
+     *
+     * @return \App\Models\Influencer The updated influencer instance with associated campaigns.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the influencer is not found.
+     */
+    public function createInfluencerCampaign(array $data): Influencer
+    {
+        $influencer = $this->influencerRepository->getInfluencer($data['id']);
+        $campaigns = $data['campaigns'];
+
+        if ($campaigns) {
+            $this->influencerRepository->attachCampaigns($influencer, $campaigns);
+        }
+
+        return $influencer;
+    }
 }

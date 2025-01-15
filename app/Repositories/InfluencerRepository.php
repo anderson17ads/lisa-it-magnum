@@ -8,6 +8,23 @@ use Illuminate\Database\Eloquent\Collection;
 class InfluencerRepository
 {
     /**
+     * Retrieves an influencer by its ID.
+     *
+     * This method fetches a single influencer from the database using its primary key.
+     * If the influencer does not exist, it throws a ModelNotFoundException.
+     *
+     * @param int $id The ID of the influencer to retrieve.
+     *
+     * @return \App\Models\Influencer The influencer model associated with the given ID.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no influencer is found with the given ID.
+     */
+    public function getInfluencer(int $id): Influencer
+    {
+        return Influencer::findOrFail($id);
+    }
+
+    /**
      * Retrieves all influencers with their associated campaigns.
      *
      * This method fetches all influencer records from the database, eager loading

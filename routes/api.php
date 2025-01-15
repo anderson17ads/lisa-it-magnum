@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Influencers
 Route::get('/influencers', [InfluencerController::class, 'index'])->name('influencers.index');
 Route::post('/influencers', [InfluencerController::class, 'store'])->name('influencers.store');
+Route::post('/influencers/{id}/campaigns', [InfluencerController::class, 'campaignStore'])->name('influencers.campaigns.store');

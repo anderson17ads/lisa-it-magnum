@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\ExistsCompaingInInfluencer;
-use App\Rules\ExistsCompaing;
+use App\Rules\ExistsCompaignInInfluencer;
+use App\Rules\ExistsCompaign;
 
-class InfluencerCampaingRequest extends FormRequest
+class CreateCampaignsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class InfluencerCampaingRequest extends FormRequest
             'id' => 'required|integer|exists:influencers,id',
             'campaigns' => 'required|array',
             'campaigns.*' => [
-                new ExistsCompaing, 
-                new ExistsCompaingInInfluencer
+                new ExistsCompaign, 
+                new ExistsCompaignInInfluencer
             ],
         ];
     }

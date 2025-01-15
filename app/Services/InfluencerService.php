@@ -58,7 +58,7 @@ class InfluencerService
     public function createInfluencerCampaign(array $data): Influencer
     {
         $influencer = $this->influencerRepository->getInfluencer($data['id']);
-        $campaigns = $data['campaigns'];
+        $campaigns = $data['campaigns'] ?? [];
 
         if ($campaigns) {
             $this->influencerRepository->attachCampaigns($influencer, $campaigns);

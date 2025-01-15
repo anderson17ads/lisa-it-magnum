@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\InfluencerController;
+use App\Http\Controllers\Api\CampaignController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/influencers', [InfluencerController::class, 'index'])->name('influencers.index');
 Route::post('/influencers', [InfluencerController::class, 'store'])->name('influencers.store');
 Route::post('/influencers/{id}/campaigns', [InfluencerController::class, 'campaignStore'])->name('influencers.campaigns.store');
+
+// Campaigns
+Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
+Route::post('/campaigns', [CampaignController::class, 'store'])->name('campaigns.store');
+Route::post('/campaigns/{id}/influencers', [CampaignController::class, 'influencerStore'])->name('campaigns.influencers.store');

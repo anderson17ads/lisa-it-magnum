@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-class ExistsCompaing implements Rule
+class ExistsCompaign implements Rule
 {
     public function passes($attribute, $value)
     {

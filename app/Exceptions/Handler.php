@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -35,28 +36,38 @@ class Handler extends ExceptionHandler
         });
     }
 
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
+     *
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function render($request, Throwable $exception)
     {
         // ValidationException
         if ($exception instanceof ValidationException) {
-            return response()->json([
-                'message' => 'Validation Error',
-                'errors' => $exception->errors(),
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+            return ApiResponse::error(
+                'Validation Error',
+                JsonResponse::HTTP_UNPROCESSABLE_ENTITY
+            )->setData(['errors' => $exception->errors()]);
         }
 
         // Exception
         if ($exception instanceof Exception) {
-            return response()->json([
-                'message' => 'An internal error has occurred',
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return ApiResponse::error(
+                'An internal error has occurred',
+                JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         // ApiException
         if ($exception instanceof ApiException) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ], JsonResponse::HTTP_BAD_REQUEST);
+            return ApiResponse::error(
+                $exception->getMessage(),
+                JsonResponse::HTTP_BAD_REQUEST
+            );
         }
 
         return parent::render($request, $exception);

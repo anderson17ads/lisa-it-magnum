@@ -16,12 +16,10 @@ class InfluencerRepository
      * @param int $id The ID of the influencer to retrieve.
      *
      * @return \App\Models\Influencer The influencer model associated with the given ID.
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no influencer is found with the given ID.
      */
     public function getInfluencer(int $id): Influencer
     {
-        return Influencer::findOrFail($id);
+        return Influencer::find($id);
     }
 
     /**

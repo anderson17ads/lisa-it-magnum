@@ -16,12 +16,10 @@ class CampaignRepository
      * @param int $id The ID of the campaign to retrieve.
      *
      * @return \App\Models\Campaign The campaign model associated with the given ID.
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no campaign is found with the given ID.
      */
     public function getCampaign(int $id): Campaign
     {
-        return Campaign::findOrFail($id);
+        return Campaign::find($id);
     }
 
     /**

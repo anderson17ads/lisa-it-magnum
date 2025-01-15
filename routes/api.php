@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\InfluencerController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::post('/influencers/{id}/campaigns', [InfluencerController::class, 'campai
 Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
 Route::post('/campaigns', [CampaignController::class, 'store'])->name('campaigns.store');
 Route::post('/campaigns/{id}/influencers', [CampaignController::class, 'influencerStore'])->name('campaigns.influencers.store');
+
+// Category
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

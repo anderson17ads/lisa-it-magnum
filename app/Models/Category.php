@@ -19,4 +19,9 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function influencers()
+    {
+        return $this->hasMany(Influencer::class);
+    }
 }

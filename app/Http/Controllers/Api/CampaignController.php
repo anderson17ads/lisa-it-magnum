@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CampaignRequest;
+use App\Http\Requests\CreateCampaignRequest;
 use App\Http\Requests\CreateInfluencersRequest;
 use App\Http\Resources\CampaignResource;
 use App\Services\CampaignService;
@@ -42,13 +42,13 @@ class CampaignController extends Controller
      * This method validates the request data, creates a new campaign, and optionally associates
      * influencers with the campaign.
      *
-     * @param \App\Http\Requests\CampaignRequest $request The request containing campaign data.
+     * @param \App\Http\Requests\CreateCampaignRequest $request The request containing campaign data.
      *
      * @return \Illuminate\Http\JsonResponse A JSON response with the created campaign details.
      *
      * @throws \Illuminate\Validation\ValidationException If the request data is invalid.
      */
-    public function store(CampaignRequest $request)
+    public function store(CreateCampaignRequest $request)
     {
         $campaign = $this->campaignService->createCampaign(
             $request->validated(),

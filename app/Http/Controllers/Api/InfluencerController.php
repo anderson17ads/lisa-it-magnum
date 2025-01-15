@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\InfluencerRequest;
+use App\Http\Requests\CreateInfluencerRequest;
 use App\Http\Requests\CreateCampaignsRequest;
 use App\Http\Resources\InfluencerResource;
 use App\Services\InfluencerService;
@@ -40,11 +40,11 @@ class InfluencerController extends Controller
      *
      * This method validates the request data, creates a new influencer, and associates campaigns if provided.
      *
-     * @param \App\Http\Requests\InfluencerRequest $request
+     * @param \App\Http\Requests\CreateInfluencerRequest $request
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(InfluencerRequest $request)
+    public function store(CreateInfluencerRequest $request)
     {
         $influencer = $this->influencerService->createInfluencer(
             $request->validated(),

@@ -21,7 +21,7 @@ class Influencer extends Model
         'name',
         'instagram_user',
         'instagram_followers_count',
-        'category',
+        'category_id',
     ];
 
     public function category(): BelongsTo

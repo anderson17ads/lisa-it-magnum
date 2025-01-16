@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,6 +47,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // UnauthorizedHttpException
+        if ($exception instanceof UnauthorizedHttpException) {
+            return ApiResponse::error(
+                'Unauthorized access. Please check your credentials or token.',
+                JsonResponse::HTTP_UNAUTHORIZED
+            );
+        }
+
         // ValidationException
         if ($exception instanceof ValidationException) {
             return ApiResponse::error(

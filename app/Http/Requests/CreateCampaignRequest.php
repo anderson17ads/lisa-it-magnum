@@ -37,9 +37,10 @@ class CreateCampaignRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'name.unique' => 'This name is already in use.',
+            'name.max' => 'The maximum character limit is 45',
             'budget.required' => 'Budget field is required.',
             'budget.numeric' => 'Budget field is not a number.',
-            'description.unique' => 'Description field is required.',
+            'description.required' => 'Description field is required.',
             'start_date.required' => 'Start date field is required.',
             'start_date.date' => 'Start date field is invalid.',
             'end_date.required' => 'End date field is required.',

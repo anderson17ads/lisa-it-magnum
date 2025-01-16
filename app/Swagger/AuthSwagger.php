@@ -92,16 +92,16 @@ class AuthSwagger
      *         )
      *     ),
      *     @OA\Response(
-     *         response=201,
+     *         response=200,
      *         description="User successfully registered",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="User successfully registered"),
      *             @OA\Property(
      *                 property="data",
      *                 type="object",
-     *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="name", type="string", example="Anderson de Souza"),
-     *                 @OA\Property(property="email", type="string", example="anderson17ads@hotmail.com")
+     *                 @OA\Property(property="access_token", type="string", example="jwt_token"),
+     *                 @OA\Property(property="token_type", type="string", example="bearer"),
+     *                 @OA\Property(property="expires_in", type="number", example="3600")
      *             )
      *         )
      *     ),

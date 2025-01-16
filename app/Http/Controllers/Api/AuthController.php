@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             throw new UnauthorizedHttpException('');
         }
 
@@ -63,7 +63,8 @@ class AuthController extends Controller
         ]);
 
         return $this->responseWithToken(
-            JWTAuth::fromUser($user)
+            JWTAuth::fromUser($user),
+            'User successfully registered'
         );
     }
 
@@ -74,7 +75,7 @@ class AuthController extends Controller
      * 
      * @return \Illuminate\Http\JsonResponse The response containing the token, its type, and expiration time.
      */
-    protected function responseWithToken(string $token)
+    protected function responseWithToken(string $token, string $message = 'Login successful')
     {
         return ApiResponse::success(
             [
@@ -82,7 +83,7 @@ class AuthController extends Controller
                 'token_type' => 'bearer',
                 'expires_in' => JWTAuth::factory()->getTTL() * 60
             ],
-            'Login successful'
+            $message
         );
     } 
 }

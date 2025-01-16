@@ -175,7 +175,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "User successfully registered",
                         "content": {
                             "application/json": {
@@ -187,17 +187,17 @@
                                         },
                                         "data": {
                                             "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "name": {
+                                                "access_token": {
                                                     "type": "string",
-                                                    "example": "Anderson de Souza"
+                                                    "example": "jwt_token"
                                                 },
-                                                "email": {
+                                                "token_type": {
                                                     "type": "string",
-                                                    "example": "anderson17ads@hotmail.com"
+                                                    "example": "bearer"
+                                                },
+                                                "expires_in": {
+                                                    "type": "number",
+                                                    "example": "3600"
                                                 }
                                             },
                                             "type": "object"
@@ -262,9 +262,526 @@
                     }
                 }
             }
+        },
+        "/api/campaigns": {
+            "get": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "List of campaigns",
+                "operationId": "300b2ef72d2ec478131fed84cc0254e9",
+                "responses": {
+                    "200": {
+                        "description": "List of campaigns",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "List of campaigns"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Campanha 1"
+                                                },
+                                                "budget": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 200
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Descrição da campanha"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-15"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-16"
+                                                },
+                                                "influencers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 15
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Anderson de Souza"
+                                                            },
+                                                            "instagram_user": {
+                                                                "type": "string",
+                                                                "example": "anderson17ads"
+                                                            },
+                                                            "instagram_followers_count": {
+                                                                "type": "integer",
+                                                                "example": 45
+                                                            },
+                                                            "category": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 2
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Beleza"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized access. Please check your credentials or token."
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "Create a new campaign",
+                "operationId": "77a64cbdf1fcd237eac5d829145eb6e1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "budget",
+                                    "description",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Campanha 1"
+                                    },
+                                    "budget": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 200
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Descrição da campanha"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-15"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-16"
+                                    },
+                                    "influencers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Campaign created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Campaign created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Campanha 1"
+                                                },
+                                                "budget": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 200
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Descrição da campanha"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-15"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-16"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The name field is required.",
+                                                            "This name is already in use.",
+                                                            "The maximum character limit is 45"
+                                                        ]
+                                                    }
+                                                },
+                                                "budget": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Budget field is required.",
+                                                            "Budget field is not a number."
+                                                        ]
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Description field is required."
+                                                        ]
+                                                    }
+                                                },
+                                                "start_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Start date field is required.",
+                                                            "Start date field is invalid."
+                                                        ]
+                                                    }
+                                                },
+                                                "end_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "End date field is required.",
+                                                            "End date field is invalid.",
+                                                            "The final date field cannot be less than the start date"
+                                                        ]
+                                                    }
+                                                },
+                                                "influencers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Influencer 1 does not exist."
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/campaigns/1/influencers": {
+            "post": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "Create a new influencer to campaign",
+                "operationId": "d99e84f5fc6bcc3635ef7cbcd19d1622",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "influencers"
+                                ],
+                                "properties": {
+                                    "influencers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Influencers created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Influencers created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Campanha 1"
+                                                },
+                                                "budget": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 200
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Descrição da campanha"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-15"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-01-16"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The name field is required.",
+                                                            "This name is already in use.",
+                                                            "The maximum character limit is 45"
+                                                        ]
+                                                    }
+                                                },
+                                                "budget": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Budget field is required.",
+                                                            "Budget field is not a number."
+                                                        ]
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Description field is required."
+                                                        ]
+                                                    }
+                                                },
+                                                "start_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Start date field is required.",
+                                                            "Start date field is invalid."
+                                                        ]
+                                                    }
+                                                },
+                                                "end_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "End date field is required.",
+                                                            "End date field is invalid.",
+                                                            "The final date field cannot be less than the start date"
+                                                        ]
+                                                    }
+                                                },
+                                                "influencers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Influencer 1 does not exist."
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
+        "schemas": {
+            "Campaign - Create a new Campaign": {
+                "required": [
+                    "name",
+                    "budget",
+                    "description",
+                    "start_date",
+                    "end_date"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Campanha 1"
+                    },
+                    "budget": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 200
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Descrição da campanha"
+                    },
+                    "start_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-01-15"
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-01-16"
+                    }
+                },
+                "type": "object"
+            },
+            "Campaign - Create a new influencer to campaign": {
+                "required": [
+                    "influencers"
+                ],
+                "properties": {
+                    "influencers": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
@@ -277,6 +794,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Campaigns",
+            "description": "Campaigns"
         }
     ]
 }

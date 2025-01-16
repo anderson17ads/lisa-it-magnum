@@ -37,7 +37,7 @@ class CreateCampaignsRequest extends FormRequest
     {
         return [
             'id.required' => 'The id is required.',
-            'id.exists' => 'The id does not exist.',
+            'id.exists' => 'The influencer does not exist.',
         ];        
     }
 

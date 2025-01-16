@@ -9,6 +9,7 @@ class CampaignSwagger
      *     path="/api/campaigns",
      *     summary="List of campaigns",
      *     tags={"Campaigns"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="List of campaigns",
@@ -79,6 +80,7 @@ class CampaignSwagger
      *     path="/api/campaigns",
      *     summary="Create a new campaign",
      *     tags={"Campaigns"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -123,6 +125,7 @@ class CampaignSwagger
      *                 @OA\Property(property="name", type="array", 
      *                      @OA\Items(type="string", example={
      *                          "The name field is required.",
+     *                          "This name is invalid.",
      *                          "This name is already in use.",
      *                          "The maximum character limit is 45"
      *                      })
@@ -177,9 +180,20 @@ class CampaignSwagger
      *      )
      * ),
      * @OA\Post(
-     *     path="/api/campaigns/1/influencers",
+     *     path="/api/campaigns/{id}/influencers",
      *     summary="Create a new influencer to campaign",
      *     tags={"Campaigns"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the Campaign",
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         )
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -216,42 +230,19 @@ class CampaignSwagger
      *             @OA\Property(
      *                 property="errors",
      *                 type="object",
-     *                 @OA\Property(property="name", type="array", 
+     *                 @OA\Property(property="id", type="array", 
      *                      @OA\Items(type="string", example={
      *                          "The name field is required.",
-     *                          "This name is already in use.",
-     *                          "The maximum character limit is 45"
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="budget", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "Budget field is required.", 
-     *                          "Budget field is not a number."
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="description", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "Description field is required."
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="start_date", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "Start date field is required.", 
-     *                          "Start date field is invalid.",
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="end_date", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "End date field is required.", 
-     *                          "End date field is invalid.",
-     *                          "The final date field cannot be less than the start date",
+     *                          "The campaign does not exist."
      *                      })
      *                 ),
      *                 @OA\Property(property="influencers", type="array", 
      *                      @OA\Items(type="string", example={
-     *                          "Influencer 1 does not exist."
+     *                          "The id field is required.",
+     *                          "Influencer 1 does not exist.",
+     *                          "Influencer 1 already exists for this campaign"
      *                      })
-     *                 ),
+     *                 )
      *             )
      *         )
      *     )

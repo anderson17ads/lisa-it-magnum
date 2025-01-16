@@ -500,6 +500,7 @@
                                                         "type": "string",
                                                         "example": [
                                                             "The name field is required.",
+                                                            "This name is invalid.",
                                                             "This name is already in use.",
                                                             "The maximum character limit is 45"
                                                         ]
@@ -566,13 +567,25 @@
                 }
             }
         },
-        "/api/campaigns/1/influencers": {
+        "/api/campaigns/{id}/influencers": {
             "post": {
                 "tags": [
                     "Campaigns"
                 ],
                 "summary": "Create a new influencer to campaign",
-                "operationId": "d99e84f5fc6bcc3635ef7cbcd19d1622",
+                "operationId": "7919e73a43f26b9c6c70431d7b402a8d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Campaign",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -656,54 +669,13 @@
                                         },
                                         "errors": {
                                             "properties": {
-                                                "name": {
+                                                "id": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string",
                                                         "example": [
                                                             "The name field is required.",
-                                                            "This name is already in use.",
-                                                            "The maximum character limit is 45"
-                                                        ]
-                                                    }
-                                                },
-                                                "budget": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "Budget field is required.",
-                                                            "Budget field is not a number."
-                                                        ]
-                                                    }
-                                                },
-                                                "description": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "Description field is required."
-                                                        ]
-                                                    }
-                                                },
-                                                "start_date": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "Start date field is required.",
-                                                            "Start date field is invalid."
-                                                        ]
-                                                    }
-                                                },
-                                                "end_date": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "End date field is required.",
-                                                            "End date field is invalid.",
-                                                            "The final date field cannot be less than the start date"
+                                                            "The campaign does not exist."
                                                         ]
                                                     }
                                                 },
@@ -712,7 +684,9 @@
                                                     "items": {
                                                         "type": "string",
                                                         "example": [
-                                                            "Influencer 1 does not exist."
+                                                            "The id field is required.",
+                                                            "Influencer 1 does not exist.",
+                                                            "Influencer 1 already exists for this campaign"
                                                         ]
                                                     }
                                                 }
@@ -725,7 +699,440 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/influencers": {
+            "get": {
+                "tags": [
+                    "Influencers"
+                ],
+                "summary": "List of influencers",
+                "operationId": "d40be5bbb94d701fb3ba13acb37e964e",
+                "responses": {
+                    "200": {
+                        "description": "List of influencers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "List of influencers"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Anderson de Souza"
+                                                },
+                                                "instagram_user": {
+                                                    "type": "string",
+                                                    "example": "anderson17ads"
+                                                },
+                                                "instagram_followers_count": {
+                                                    "type": "number",
+                                                    "example": 45
+                                                },
+                                                "category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": "2"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Beleza"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "campaigns": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Campanha 1"
+                                                            },
+                                                            "budget": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 200
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Descrição da campanha"
+                                                            },
+                                                            "start_date": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2025-01-15"
+                                                            },
+                                                            "end_date": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2025-01-16"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized access. Please check your credentials or token."
+                                        },
+                                        "data": {
+                                            "type": "null",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Influencers"
+                ],
+                "summary": "Create a new influencer",
+                "operationId": "d345f9a42224ccf265ad06d7f9edd3b1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "instagram_user",
+                                    "instagram_followers_count",
+                                    "category"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Anderson de Souza"
+                                    },
+                                    "instagram_user": {
+                                        "type": "string",
+                                        "example": "anderson17ads"
+                                    },
+                                    "instagram_followers_count": {
+                                        "type": "number",
+                                        "example": 45
+                                    },
+                                    "category": {
+                                        "type": "number",
+                                        "example": 2
+                                    },
+                                    "campaigns": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Influencer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Influencer created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Anderson de Souza"
+                                                },
+                                                "instagram_user": {
+                                                    "type": "string",
+                                                    "example": "anderson17ads"
+                                                },
+                                                "instagram_followers_count": {
+                                                    "type": "number",
+                                                    "example": 45
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The name field is required.",
+                                                            "This name is invalid.",
+                                                            "This name is already in use.",
+                                                            "The maximum character limit is 45"
+                                                        ]
+                                                    }
+                                                },
+                                                "instagram_user": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Instagram username is required.",
+                                                            "This Instagram username is already in use.",
+                                                            "Instagram username is invalid",
+                                                            "The maximum character limit is 45"
+                                                        ]
+                                                    }
+                                                },
+                                                "instagram_followers_count": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The followers number field is required."
+                                                        ]
+                                                    }
+                                                },
+                                                "category_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The category field is required.",
+                                                            "This category is invalid."
+                                                        ]
+                                                    }
+                                                },
+                                                "campaigns": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "Campaign 1 does not exist."
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/influencers/{id}/campaigns": {
+            "post": {
+                "tags": [
+                    "Influencers"
+                ],
+                "summary": "Create a new campaign to influencer",
+                "operationId": "d6b74febbb3f015c5d2ca345d6687da4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the influencer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "campaigns"
+                                ],
+                                "properties": {
+                                    "campaigns": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Campaigns created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Campaigns created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Anderson de Souza"
+                                                },
+                                                "instagram_user": {
+                                                    "type": "string",
+                                                    "example": "anderson17ads"
+                                                },
+                                                "instagram_followers_count": {
+                                                    "type": "number",
+                                                    "example": 45
+                                                },
+                                                "category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": "2"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Beleza"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The id field is required.",
+                                                            "The influencer does not exist."
+                                                        ]
+                                                    }
+                                                },
+                                                "campaigns": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The id field is required.",
+                                                            "Campaign 1 does not exist.",
+                                                            "Campaign 1 already exists for this influencer"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -780,6 +1187,48 @@
                     }
                 },
                 "type": "object"
+            },
+            "Influencer - Create a new Influencer": {
+                "required": [
+                    "name",
+                    "instagram_user",
+                    "instagram_followers_count",
+                    "category"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Anderson de Souza"
+                    },
+                    "instagram_user": {
+                        "type": "string",
+                        "example": "anderson17ads"
+                    },
+                    "instagram_followers_count": {
+                        "type": "number",
+                        "example": 45
+                    },
+                    "category": {
+                        "type": "number",
+                        "example": 2
+                    }
+                },
+                "type": "object"
+            },
+            "Influencer - Create a new campaign to influencer": {
+                "required": [
+                    "influencers"
+                ],
+                "properties": {
+                    "campaigns": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -798,6 +1247,10 @@
         {
             "name": "Campaigns",
             "description": "Campaigns"
+        },
+        {
+            "name": "Influencers",
+            "description": "Influencers"
         }
     ]
 }

@@ -35,10 +35,15 @@ class CreateInfluencerRequest extends FormRequest
     {
         return [
             'name.required' => 'The name field is required.',
+            'name.string' => 'This name is invalid.',
+            'name.max' => 'The maximum character limit is 45',
+            'instagram_user.string' => 'Instagram username is invalid.',
             'instagram_user.required' => 'Instagram username is required.',
+            'instagram_user.max' => 'The maximum character limit is 45',
             'instagram_user.unique' => 'This Instagram username is already in use.',
             'instagram_followers_count.required' => 'The followers number field is required.',
             'category_id.required' => 'The category field is required.',
+            'category_id.integer' => 'This category is invalid.',
             'campaigns.*.exists' => 'Campaign :input does not exist.',
         ];        
     }

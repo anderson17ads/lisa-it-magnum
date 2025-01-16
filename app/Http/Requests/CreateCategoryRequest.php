@@ -30,6 +30,8 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'The name field is required.',
+            'name.string' => 'The name field is invalid.',
+            'name.max' => 'The maximum character limit is 45.',
         ];        
     }
 }

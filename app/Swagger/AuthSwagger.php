@@ -5,6 +5,12 @@ namespace App\Swagger;
 class AuthSwagger
 {
     /**
+     * @OA\Schema(
+     *     schema="Auth - User login",
+     *     required={"email", "password"},
+     *     @OA\Property(property="email", type="string", example="este@lisait.com.br"),
+     *     @OA\Property(property="password", type="string", example="123456")
+     * ),
      * @OA\Post(
      *     path="/api/login",
      *     summary="User login",
@@ -78,6 +84,13 @@ class AuthSwagger
     }
 
     /**
+     * @OA\Schema(
+     *     schema="Auth - Register a new user",
+     *     required={"name", "email", "password"},
+     *     @OA\Property(property="name", type="string", example="Lisa It"),
+     *     @OA\Property(property="email", type="string", example="este@lisait.com.br"),
+     *     @OA\Property(property="password", type="string", example="123456")
+     * ),
      * @OA\Post(
      *     path="/api/register",
      *     summary="Register a new user",

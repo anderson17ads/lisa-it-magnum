@@ -1344,6 +1344,45 @@
     },
     "components": {
         "schemas": {
+            "Auth - User login": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "este@lisait.com.br"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
+            "Auth - Register a new user": {
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Lisa It"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "este@lisait.com.br"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
             "Campaign - Create a new Campaign": {
                 "required": [
                     "name",

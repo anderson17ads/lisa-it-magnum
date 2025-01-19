@@ -25,9 +25,10 @@ class AuthRegisterRequest extends FormRequest
         return [
             'name.required' => 'The field name is required.',
             'name.string' => 'The field name is invalid.',
+            'name.max' => 'The maximum character limit is 255.',
             'email.required' => 'The field email is required.',
-            'email.unique' => 'This email is already in use.',
-            'email.email' => 'The email is invalid.',
+            'email.unique' => 'This field email is already in use.',
+            'email.email' => 'The field email is invalid.',
             'password.required' => 'The field password is required.',
             'password.min' => 'The password must have at least 6 digits.',
         ];        

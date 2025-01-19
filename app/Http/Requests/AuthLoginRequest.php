@@ -23,7 +23,7 @@ class AuthLoginRequest extends FormRequest
     {
         return [
             'email.required' => 'The field email is required.',
-            'email.email' => 'The email is invalid.',
+            'email.email' => 'The field email is invalid.',
             'password.required' => 'The field password is required.',
             'password.min' => 'The password must have at least 6 digits.',
         ];        

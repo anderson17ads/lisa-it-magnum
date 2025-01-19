@@ -18,7 +18,7 @@ class ApiResponse
      * @return \Illuminate\Http\JsonResponse
      */
     public static function success(
-        $data = null, 
+        mixed $data = null, 
         string $message = 'Request successful', 
         int $status = JsonResponse::HTTP_OK
     ): JsonResponse
@@ -34,19 +34,21 @@ class ApiResponse
      *
      * This method returns a standardized error response with a message and null data.
      *
+     * @param mixed $data Data to be returned.
      * @param string $message Error message.
      * @param int $status HTTP status code (default is 400).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public static function error(
+        mixed $data = null,
         string $message, 
         int $status = JsonResponse::HTTP_BAD_REQUEST
     ): JsonResponse
     {
         return response()->json([
             'message' => $message,
-            'data' => null,
+            'data' => $data,
         ], $status);
     }
 
@@ -61,7 +63,7 @@ class ApiResponse
      * @return \Illuminate\Http\JsonResponse
      */
     public static function created(
-        $data, 
+        mixed $data, 
         string $message = 'Resource created successfully'
     ): JsonResponse
     {

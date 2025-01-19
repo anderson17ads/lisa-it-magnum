@@ -50,6 +50,7 @@ class Handler extends ExceptionHandler
         // UnauthorizedHttpException
         if ($exception instanceof UnauthorizedHttpException) {
             return ApiResponse::error(
+                null,
                 'Unauthorized access. Please check your credentials or token.',
                 JsonResponse::HTTP_UNAUTHORIZED
             );
@@ -58,14 +59,16 @@ class Handler extends ExceptionHandler
         // ValidationException
         if ($exception instanceof ValidationException) {
             return ApiResponse::error(
+                ['errors' => $exception->errors()],
                 'Validation Error',
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY
-            )->setData(['errors' => $exception->errors()]);
+            );
         }
 
         // Exception
         if ($exception instanceof Exception) {
             return ApiResponse::error(
+                null,
                 'An internal error has occurred',
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -74,6 +77,7 @@ class Handler extends ExceptionHandler
         // ApiException
         if ($exception instanceof ApiException) {
             return ApiResponse::error(
+                null,
                 $exception->getMessage(),
                 JsonResponse::HTTP_BAD_REQUEST
             );

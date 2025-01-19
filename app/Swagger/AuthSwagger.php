@@ -8,7 +8,7 @@ class AuthSwagger
      * @OA\Schema(
      *     schema="Auth - User login",
      *     required={"email", "password"},
-     *     @OA\Property(property="email", type="string", example="este@lisait.com.br"),
+     *     @OA\Property(property="email", type="string", example="teste@lisait.com.br"),
      *     @OA\Property(property="password", type="string", example="123456")
      * ),
      * @OA\Post(
@@ -43,19 +43,23 @@ class AuthSwagger
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Validation error"),
      *             @OA\Property(
-     *                 property="errors",
+     *                 property="data",
      *                 type="object",
-     *                 @OA\Property(property="email", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The field email is required.", 
-     *                          "The email is invalid."
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="password", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The field password is required.",
-     *                          "The password must have at least 6 digits."
-     *                      })
+     *                 @OA\Property(
+     *                     property="errors",
+     *                     type="object",
+     *                     @OA\Property(property="email", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The field email is required.", 
+     *                              "The field name is invalid."
+     *                          })
+     *                     ),
+     *                     @OA\Property(property="password", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The field password is required.",
+     *                              "The password must have at least 6 digits."
+     *                          })
+     *                     )
      *                 )
      *             )
      *         )
@@ -124,26 +128,31 @@ class AuthSwagger
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Validation error"),
      *             @OA\Property(
-     *                 property="errors",
+     *                 property="data",
      *                 type="object",
-     *                 @OA\Property(property="name", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The name field is required.",
-     *                          "The field name is invalid."
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="email", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The field email is required.", 
-     *                          "The email is invalid.", 
-     *                          "This email is already in use."
-     *                      })
-     *                 ),
-     *                 @OA\Property(property="password", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The field password is required.",
-     *                          "The password must have at least 6 digits."
-     *                      })
+     *                 @OA\Property(
+     *                     property="errors",
+     *                     type="object",
+     *                     @OA\Property(property="name", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The name field is required.",
+     *                              "The field name is invalid.",
+     *                              "The maximum character limit is 255."
+     *                          })
+     *                     ),
+     *                     @OA\Property(property="email", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The field email is required.", 
+     *                              "The field name is invalid.", 
+     *                              "This email is already in use."
+     *                          })
+     *                     ),
+     *                     @OA\Property(property="password", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The field password is required.",
+     *                              "The password must have at least 6 digits."
+     *                          })
+     *                     )
      *                 )
      *             )
      *         )

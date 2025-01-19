@@ -82,27 +82,32 @@
                                             "type": "string",
                                             "example": "Validation error"
                                         },
-                                        "errors": {
+                                        "data": {
                                             "properties": {
-                                                "email": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The field email is required.",
-                                                            "The email is invalid."
-                                                        ]
-                                                    }
-                                                },
-                                                "password": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The field password is required.",
-                                                            "The password must have at least 6 digits."
-                                                        ]
-                                                    }
+                                                "errors": {
+                                                    "properties": {
+                                                        "email": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The field email is required.",
+                                                                    "The field name is invalid."
+                                                                ]
+                                                            }
+                                                        },
+                                                        "password": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The field password is required.",
+                                                                    "The password must have at least 6 digits."
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -218,38 +223,44 @@
                                             "type": "string",
                                             "example": "Validation error"
                                         },
-                                        "errors": {
+                                        "data": {
                                             "properties": {
-                                                "name": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The name field is required.",
-                                                            "The field name is invalid."
-                                                        ]
-                                                    }
-                                                },
-                                                "email": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The field email is required.",
-                                                            "The email is invalid.",
-                                                            "This email is already in use."
-                                                        ]
-                                                    }
-                                                },
-                                                "password": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The field password is required.",
-                                                            "The password must have at least 6 digits."
-                                                        ]
-                                                    }
+                                                "errors": {
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The name field is required.",
+                                                                    "The field name is invalid.",
+                                                                    "The maximum character limit is 255."
+                                                                ]
+                                                            }
+                                                        },
+                                                        "email": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The field email is required.",
+                                                                    "The field name is invalid.",
+                                                                    "This email is already in use."
+                                                                ]
+                                                            }
+                                                        },
+                                                        "password": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The field password is required.",
+                                                                    "The password must have at least 6 digits."
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -1352,7 +1363,7 @@
                 "properties": {
                     "email": {
                         "type": "string",
-                        "example": "este@lisait.com.br"
+                        "example": "teste@lisait.com.br"
                     },
                     "password": {
                         "type": "string",

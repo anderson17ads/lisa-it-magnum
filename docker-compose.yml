@@ -49,8 +49,26 @@ services:
     networks:
       - app-network-lisa-it-magnum-php
 
+  db_test:
+    container_name: lisa-it-magnum-mysql-test
+    image: mysql:5.7
+    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    ports:
+      - '3307:3306'
+    volumes:
+      - db-data-lisa-it-magnum-test-php:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=lisa-it-magnum-test
+      - MYSQL_USER=lisa-it-magnum-test
+      - MYSQL_PASSWORD=lisa-it-magnum-test
+    networks:
+      - app-network-lisa-it-magnum-php      
+
 volumes:
   db-data-lisa-it-magnum-php:
+  db-data-lisa-it-magnum-test-php:
 
 networks:
   app-network-lisa-it-magnum-php:

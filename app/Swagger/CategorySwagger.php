@@ -99,18 +99,22 @@ class CategorySwagger
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Validation error"),
      *             @OA\Property(
-     *                 property="errors",
+     *                 property="data",
      *                 type="object",
-     *                 @OA\Property(property="name", type="array", 
-     *                      @OA\Items(type="string", example={
-     *                          "The name field is required.",
-     *                          "This name is invalid.",
-     *                          "The maximum character limit is 45"
-     *                      })
+     *                 @OA\Property(
+     *                     property="errors",
+     *                     type="object",
+     *                     @OA\Property(property="name", type="array", 
+     *                          @OA\Items(type="string", example={
+     *                              "The name field is required.",
+     *                              "This name is invalid.",
+     *                              "The maximum character limit is 45"
+     *                          })
+     *                     )
      *                 )
      *             )
      *         )
-     *     )
+     *     ),     
      * )
      */
     public function store()

@@ -894,18 +894,23 @@
                                             "type": "string",
                                             "example": "Validation error"
                                         },
-                                        "errors": {
+                                        "data": {
                                             "properties": {
-                                                "name": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": [
-                                                            "The name field is required.",
-                                                            "This name is invalid.",
-                                                            "The maximum character limit is 45"
-                                                        ]
-                                                    }
+                                                "errors": {
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": [
+                                                                    "The name field is required.",
+                                                                    "This name is invalid.",
+                                                                    "The maximum character limit is 45"
+                                                                ]
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"

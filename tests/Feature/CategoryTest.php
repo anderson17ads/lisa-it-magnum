@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Tests\TestCase;
 
@@ -82,7 +81,7 @@ class CategoryTest extends TestCase
         $dataProvider = $dataProvider[0];
         $contextUnauthorized = in_array('unauthorized', $dataProvider['context']);
 
-        // Create user for validate unique register
+        // Create category for validate unique register
         if (in_array('unique', $dataProvider['context'])) {
             Category::factory()->create($dataProvider['data']);
         }
@@ -161,7 +160,7 @@ class CategoryTest extends TestCase
             'With no items' => [[
                 'type' => 'index',
                 'context' => ['no_items'],
-                'data' => [self::DEFAULT_DATA['name']],
+                'data' => [],
                 'status' => JsonResponse::HTTP_OK,
                 'message' => 'List of categories',
                 'expectedStructure' => [
@@ -172,7 +171,7 @@ class CategoryTest extends TestCase
             'With invalid credentials' => [[
                 'type' => 'index',
                 'context' => ['unauthorized', 'no_items'],
-                'data' => [self::DEFAULT_DATA['name']],
+                'data' => [],
                 'user' => [
                     'email' => fake()->unique()->safeEmail(),
                     'password' => Str::random(6),

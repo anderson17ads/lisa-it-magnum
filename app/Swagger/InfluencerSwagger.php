@@ -121,9 +121,9 @@ class InfluencerSwagger
      *                 @OA\Property(property="name", type="array", 
      *                      @OA\Items(type="string", example={
      *                          "The name field is required.",
-     *                          "This name is invalid.",
+     *                          "The name field is invalid.",
      *                          "This name is already in use.",
-     *                          "The maximum character limit is 45"
+     *                          "The maximum character limit is 45."
      *                      })
      *                 ),
      *                 @OA\Property(property="instagram_user", type="array", 
@@ -131,7 +131,7 @@ class InfluencerSwagger
      *                          "Instagram username is required.", 
      *                          "This Instagram username is already in use.",
      *                          "Instagram username is invalid",
-     *                          "The maximum character limit is 45"
+     *                          "The maximum character limit is 45."
      *                      })
      *                 ),
      *                 @OA\Property(property="instagram_followers_count", type="array", 

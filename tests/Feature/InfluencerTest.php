@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Campaign;
 use App\Models\Influencer;
 use App\Models\User;
 use App\Models\Category;
@@ -126,6 +127,45 @@ class InfluencerTest extends TestCase
     }
 
     /**
+     * 
+     * @dataProvider campaignStoreDataProvider
+     */
+    public function test_campaign_store(...$dataProvider)
+    {
+        $dataProvider = $dataProvider[0];
+        $contextUnauthorized = in_array('unauthorized', $dataProvider['context']);
+        $influencer = Influencer::factory()->create(['category_id' => $this->categoryId]);
+        $campaign = Campaign::factory()->create();
+
+        $influencerId = $dataProvider['data']['influencerId'] ?? $influencer->id;
+        $campaignId = $dataProvider['data']['campaignId'] ?? $campaign->id;
+
+        $token = auth('api')->login($this->user);
+
+        if ($contextUnauthorized) {
+            $token = auth('api')->attempt([
+                'email' => fake()->unique()->safeEmail(),
+                'password' => Str::random(6),
+            ]);
+        }
+
+        $response = $this
+            ->withHeaders([
+                'Authorization' => "Bearer {$token}",
+            ])
+            ->postJson("/api/influencers/{$influencerId}/campaigns", [
+                'campaigns' => [$campaignId]
+            ]);
+
+        $response
+            ->assertStatus($dataProvider['status'])
+            ->assertJsonStructure($dataProvider['expectedStructure'])
+            ->assertJsonFragment(['message' => $dataProvider['message']]);
+
+        $this->handleValidate($response, $dataProvider);
+    }
+
+    /**
      * Handle validate
      * 
      * @param TestResponse $response
@@ -141,7 +181,7 @@ class InfluencerTest extends TestCase
         $contextValidation = in_array('validation', $dataProvider['context']);
         $contextCreate = in_array('create', $dataProvider['context']);
 
-        $typeCreate = $dataProvider['type'] == 'store';
+        $typeStore = $dataProvider['type'] == 'store';
 
         // Validate only context validation
         if ($contextValidation) {
@@ -149,7 +189,7 @@ class InfluencerTest extends TestCase
         }
 
         // Validate type create
-        if ($typeCreate) {
+        if ($typeStore) {
             // Validate context create
             if ($contextCreate) {
                 $this->assertDatabaseHas('influencers', [
@@ -399,6 +439,62 @@ class InfluencerTest extends TestCase
                 ],
                 'errors' => [
                     'category_id' => ['This category is invalid.'],
+                ],
+            ]],
+        ];
+    }
+
+    public static function campaignStoreDataProvider(): array
+    {
+        return [
+            'with campaign created' => [[
+                'type' => 'campaignStore',
+                'context' => ['create'],
+                'data' => [],
+                'status' => JsonResponse::HTTP_CREATED,
+                'message' => 'Campaigns created successfully',
+                'expectedStructure' => [
+                    'message',
+                    'data' => [
+                        'id',
+                        'name',
+                        'instagram_user',
+                        'instagram_followers_count',
+                        'category' => [
+                            'id',
+                            'name',
+                        ],
+                    ],              
+                ],
+            ]],
+            'with influencer not existing' => [[
+                'type' => 'campaignStore',
+                'context' => ['create'],
+                'data' => [
+                    'influencerId' => fake()->numberBetween(0, 1000),
+                ],
+                'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => 'Validation Error',
+                'expectedStructure' => [
+                    'data' => ['errors' => ['id']],
+                ],
+                'errors' => [
+                    'id' => ['The influencer does not exist.'],
+                ],
+            ]],
+            'with campaign not existing' => [[
+                'type' => 'campaignStore',
+                'context' => ['create'],
+                'data' => [
+                    'campaignId' => fake()->numberBetween(0, 1000),
+                ],
+                'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => 'Validation Error',
+                'expectedStructure' => [
+                    'data' => ['errors' => ['campaigns']],
+                ],
+                'errors' => [
+                    'campaigns' => ['Campaign 999 does not exist.'],
                 ],
             ]],
         ];

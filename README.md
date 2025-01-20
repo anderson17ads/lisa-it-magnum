@@ -74,6 +74,21 @@ Antes de começar, você precisará ter instalados:
      ```
      http://localhost/api/documentation
      ```
+## Testes automatizados
+
+Foi criado um banco de testes separado do banco real. As configurações do banco estão no arquivo `.env.testing` e no `docker-compose` em `db_test`.
+
+Antes de rodar os testes, é necessário executar a migração das tabelas do banco real para o banco de teste com o seguinte comando:
+
+```bash
+docker-compose exec app php artisan migrate --env=testing
+```
+
+Depois, basta rodar os testes com:
+
+```bash
+docker-compose exec app php artisan test
+```   
 
 ## Como Iniciar os Testes
 
